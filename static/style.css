@@ -1,48 +1,46 @@
+
 body {
     margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
     direction: rtl;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color: #ffffff;
+    background: linear-gradient(135deg, #020617, #0f172a);
+    color: white;
+    overflow-x: hidden;
 }
 
 .container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-    box-sizing: border-box;
-}
-
-.container > * {
     width: 100%;
-    max-width: 850px;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 10px;
-    font-size: 36px;
+    font-size: 42px;
+    margin-top: 30px;
+    line-height: 1.2;
 }
 
 .subtitle {
     text-align: center;
     color: #cbd5e1;
     margin-bottom: 30px;
-    font-size: 18px;
+    line-height: 1.8;
 }
 
 form {
     background: #111827;
-    padding: 30px;
-    border-radius: 22px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    padding: 22px;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 
 label {
     display: block;
-    margin-top: 18px;
+    margin-top: 15px;
     margin-bottom: 8px;
     font-weight: bold;
 }
@@ -50,40 +48,45 @@ label {
 select,
 textarea {
     width: 100%;
-    box-sizing: border-box;
     padding: 14px;
     border-radius: 14px;
     border: 1px solid #334155;
     background: #020617;
     color: white;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
 textarea {
     height: 170px;
-    resize: vertical;
+    resize: none;
     line-height: 1.8;
 }
 
 button {
     width: 100%;
-    margin-top: 18px;
     padding: 15px;
     border: none;
     border-radius: 14px;
-    background: #2563eb;
-    color: white;
+    margin-top: 15px;
     font-size: 17px;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-button:hover {
+.generate-btn {
+    background: #2563eb;
+    color: white;
+}
+
+.generate-btn:hover {
     background: #1d4ed8;
 }
 
 .clear-btn {
     background: #475569;
+    color: white;
 }
 
 .clear-btn:hover {
@@ -92,6 +95,7 @@ button:hover {
 
 .copy-btn {
     background: #16a34a;
+    color: white;
 }
 
 .copy-btn:hover {
@@ -100,12 +104,11 @@ button:hover {
 
 .result {
     margin-top: 28px;
-    padding: 24px;
     background: #111827;
-    border-radius: 22px;
+    padding: 24px;
+    border-radius: 24px;
     line-height: 1.9;
-    white-space: pre-wrap;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 
 .result h3 {
@@ -117,49 +120,35 @@ button:hover {
     padding: 18px;
     border-radius: 14px;
     border: 1px solid #334155;
-}@media (max-width: 768px) {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
 
     .container {
-        padding: 15px;
-        display: block;
+        padding: 16px;
     }
 
     h1 {
-        font-size: 32px;
-        text-align: center;
+        font-size: 34px;
     }
 
     .subtitle {
-        text-align: center;
-        font-size: 16px;
+        font-size: 15px;
     }
 
-    form {
-        width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    select,
-    textarea,
-    button {
-        width: 100%;
-        font-size: 16px;
+    form,
+    .result {
+        padding: 18px;
     }
 
     textarea {
-        height: 180px;
+        height: 160px;
     }
 
-    .result {
-        width: 100%;
-        box-sizing: border-box;
-        overflow-wrap: break-word;
-    }
-
-    .result p {
-        font-size: 15px;
-        line-height: 1.9;
+    button {
+        font-size: 16px;
     }
 
 }
