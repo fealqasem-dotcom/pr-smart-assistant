@@ -14,10 +14,12 @@
 <h1>🤖 PR Smart Assistant</h1>
 
 <p class="subtitle">
-مساعد ذكي للعلاقات العامة
+منصة ذكية لصناعة محتوى العلاقات العامة باحتراف
 </p>
 
 <form method="POST">
+
+<label>اختر نوع الخدمة:</label>
 
 <select name="mode">
 
@@ -37,15 +39,33 @@
 💡 أفكار حملات
 </option>
 
+<option value="crisis">
+🚨 إدارة أزمة إعلامية
+</option>
+
+<option value="social">
+📱 منشور سوشيال ميديا
+</option>
+
+<option value="email">
+📧 بريد رسمي
+</option>
+
 </select>
+
+<label>اكتب طلبك:</label>
 
 <textarea
 name="user_input"
-placeholder="اكتب طلبك هنا..."
+placeholder="مثال: اكتب بيان صحفي عن إطلاق تطبيق سعودي جديد للعلاقات العامة"
 ></textarea>
 
 <button type="submit">
 ✨ إنشاء المحتوى
+</button>
+
+<button type="reset" class="clear-btn">
+🧹 مسح
 </button>
 
 </form>
@@ -57,14 +77,26 @@ placeholder="اكتب طلبك هنا..."
 📌 النتيجة:
 </h3>
 
-<p>
+<p id="resultText">
 {{ result }}
 </p>
+
+<button onclick="copyResult()" type="button" class="copy-btn">
+📋 نسخ النتيجة
+</button>
 
 </div>
 {% endif %}
 
 </div>
+
+<script>
+function copyResult() {
+    const text = document.getElementById("resultText").innerText;
+    navigator.clipboard.writeText(text);
+    alert("تم نسخ النتيجة بنجاح");
+}
+</script>
 
 </body>
 </html>
