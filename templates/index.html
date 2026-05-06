@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+<meta charset="UTF-8">
+<title>PR Smart Assistant</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🤖 PR Smart Assistant</h1>
+
+<p class="subtitle">
+مساعد ذكي للعلاقات العامة
+</p>
+
+<form method="POST">
+
+<select name="mode">
+
+<option value="press">
+📰 كتابة بيان صحفي
+</option>
+
+<option value="customer">
+💬 الرد على العملاء
+</option>
+
+<option value="formal">
+📄 رد رسمي
+</option>
+
+<option value="ideas">
+💡 أفكار حملات
+</option>
+
+</select>
+
+<textarea
+name="user_input"
+placeholder="اكتب طلبك هنا..."
+></textarea>
+
+<button type="submit">
+✨ إنشاء المحتوى
+</button>
+
+</form>
+
+{% if result %}
+<div class="result">
+
+<h3>
+📌 النتيجة:
+</h3>
+
+<p>
+{{ result }}
+</p>
+
+</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>
