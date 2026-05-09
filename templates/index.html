@@ -1,102 +1,143 @@
 <!DOCTYPE html>
-<html lang="ar">
-
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>PR Smart Assistant</title>
-<link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8">
+  <title>AURA AI | مساعدك الذكي</title>
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
 
-<div class="container">
+<header class="hero">
+  <div class="logo">
+    <div class="logo-icon">A</div>
+    <div>
+      <h1>AURA AI</h1>
+      <p class="tagline">مساعدك الذكي للكتابة والتلخيص وصناعة المحتوى</p>
+    </div>
+  </div>
 
-<h1>🤖 PR Smart Assistant</h1>
+  <a href="#services" class="main-btn">ابدأ الآن</a>
+</header>
 
-<p class="subtitle">
-منصة ذكية لصناعة محتوى العلاقات العامة باحتراف
-</p>
+<section class="login-box">
+  <h2>تسجيل الدخول</h2>
+  <p>سجل بإيميلك لتحصل على 5 استخدامات مجانية كل 24 ساعة</p>
 
-<form method="POST">
+  <input id="email" type="email" placeholder="اكتب بريدك الإلكتروني">
+  <button onclick="login()">دخول / إنشاء حساب</button>
 
-<label>اختر نوع الخدمة:</label>
+  <div id="userBox" style="display:none;">
+    <p id="userEmail"></p>
+    <p id="usesText"></p>
+    <button onclick="logout()">تسجيل خروج</button>
+  </div>
+</section>
 
-<select name="mode">
+<section id="services" class="services">
+  <h2>الخدمات</h2>
 
-<option value="press">
-📰 كتابة بيان صحفي
-</option>
+  <div class="cards">
+    <div class="card">
+      <h3>تلخيص النصوص</h3>
+      <p>الصق أي نص طويل واحصل على ملخص واضح.</p>
+      <button onclick="openService('summary')">استخدم الخدمة</button>
+    </div>
 
-<option value="customer">
-💬 الرد على العملاء
-</option>
+    <div class="card">
+      <h3>إعادة الصياغة</h3>
+      <p>حوّل النص إلى أسلوب أوضح وأكثر احترافية.</p>
+      <button onclick="openService('rewrite')">استخدم الخدمة</button>
+    </div>
 
-<option value="formal">
-📄 رد رسمي
-</option>
+    <div class="card">
+      <h3>الترجمة</h3>
+      <p>ترجم النصوص بسهولة.</p>
+      <button onclick="openService('translate')">استخدم الخدمة</button>
+    </div>
 
-<option value="ideas">
-💡 أفكار حملات
-</option>
+    <div class="card">
+      <h3>كتابة بريد</h3>
+      <p>اكتب بريد رسمي أو مختصر.</p>
+      <button onclick="openService('email')">استخدم الخدمة</button>
+    </div>
 
-<option value="crisis">
-🚨 إدارة أزمة إعلامية
-</option>
+    <div class="card">
+      <h3>أفكار محتوى</h3>
+      <p>احصل على أفكار لمنشورات ومقاطع.</p>
+      <button onclick="openService('content')">استخدم الخدمة</button>
+    </div>
 
-<option value="social">
-📱 منشور سوشيال ميديا
-</option>
+    <div class="card">
+      <h3>شرح مبسط</h3>
+      <p>اشرح أي موضوع بطريقة سهلة.</p>
+      <button onclick="openService('explain')">استخدم الخدمة</button>
+    </div>
+  </div>
+</section>
 
-<option value="email">
-📧 بريد رسمي
-</option>
+<section id="toolBox" class="tool-box" style="display:none;">
+  <h2 id="toolTitle"></h2>
 
-</select>
+  <form method="POST">
+    <input type="hidden" id="modeInput" name="mode">
 
-<label>اكتب طلبك:</label>
+    <textarea
+      id="userText"
+      name="user_input"
+      placeholder="اكتب النص هنا..."
+    ></textarea>
 
-<textarea
-name="user_input"
-placeholder="مثال: اكتب بيان صحفي عن إطلاق تطبيق سعودي جديد للعلاقات العامة"
-></textarea>
-
-<button type="submit">
-✨ إنشاء المحتوى
+    <button
+  type="submit"
+  onclick="keepToolOpen()"
+>
+  تنفيذ
 </button>
+  </form>
 
-<button type="reset" class="clear-btn">
-🧹 مسح
-</button>
+  <div id="resultBox">{{ result }}</div>
+</section>
 
-</form>
+<section id="plans" class="plans">
+  <h2>الاشتراكات</h2>
 
-{% if result %}
-<div class="result">
+  <div class="plan-cards">
+    <div class="plan">
+      <h3>مجاني</h3>
+      <p class="price">0 ريال</p>
+      <p>5 استخدامات كل 24 ساعة</p>
+      <button onclick="chooseFree()">ابدأ مجاناً</button>
+    </div>
 
-<h3>
-📌 النتيجة:
-</h3>
+    <div class="plan featured">
+      <h3>AURA Pro</h3>
+      <p class="price">19 ريال / شهرياً</p>
+      <p>استخدامات أكثر وبدون انتظار</p>
+      <button onclick="payNow('pro')">اشترك الآن</button>
+    </div>
 
-<p id="resultText">
-{{ result }}
-</p>
+    <div class="plan">
+      <h3>AURA VIP</h3>
+      <p class="price">49 ريال / شهرياً</p>
+      <p>استخدام غير محدود ومزايا إضافية</p>
+      <button onclick="payNow('vip')">اشترك الآن</button>
+    </div>
+  </div>
+</section>
 
-<button onclick="copyResult()" type="button" class="copy-btn">
-📋 نسخ النتيجة
-</button>
-
+<div class="contact-floating">
+  <p>تواصل معنا</p>
+  <a href="mailto:fe.alqasem@gmail.com">fe.alqasem@gmail.com</a>
+  <a href="https://x.com/P_1z20" target="_blank">X: @P_1z20</a>
 </div>
-{% endif %}
 
-</div>
+<footer>
+  <p>© AURA AI - جميع الحقوق محفوظة</p>
+</footer>
 
-<script>
-function copyResult() {
-    const text = document.getElementById("resultText").innerText;
-    navigator.clipboard.writeText(text);
-    alert("تم نسخ النتيجة بنجاح");
-}
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/static/script.js"></script>
 
 </body>
 </html>

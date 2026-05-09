@@ -1,35 +1,51 @@
-import os
 from flask import Flask, render_template, request
 from openai import OpenAI
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
 app = Flask(__name__)
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
 def generate_response(user_input, mode):
+
     prompts = {
-        "press": "أنت خبير علاقات عامة. اكتب بيانًا صحفيًا احترافيًا باللغة العربية، يحتوي على عنوان جذاب، مقدمة، تفاصيل رئيسية، اقتباس رسمي، وخاتمة.",
-        "customer": "أنت موظف علاقات عامة وخدمة عملاء محترف. اكتب ردًا مهذبًا وواضحًا واحترافيًا باللغة العربية على استفسار أو شكوى العميل.",
-        "formal": "أنت كاتب إداري محترف. اكتب ردًا رسميًا مناسبًا للشركات والجهات الرسمية باللغة العربية.",
-        "ideas": "أنت مستشار علاقات عامة. اقترح أفكار حملات علاقات عامة إبداعية وقابلة للتنفيذ باللغة العربية.",
-        "crisis": "أنت خبير إدارة أزمات إعلامية. اكتب ردًا رسميًا هادئًا يحافظ على سمعة الجهة ويعالج الموقف باحتراف.",
-        "social": "أنت متخصص محتوى رقمي. اكتب منشورًا احترافيًا وجذابًا لمنصات التواصل الاجتماعي باللغة العربية.",
-        "email": "أنت كاتب مراسلات إدارية. اكتب بريدًا رسميًا احترافيًا باللغة العربية مناسبًا للشركات والجهات الرسمية."
+
+        "summary":
+        f"لخص النص التالي بالعربية بشكل واضح ومختصر:\n\n{user_input}",
+
+        "rewrite":
+        f"أعد صياغة النص التالي بطريقة احترافية:\n\n{user_input}",
+
+        "translate":
+        f"ترجم النص التالي إلى الإنجليزية:\n\n{user_input}",
+
+        "email":
+        f"اكتب بريد إلكتروني احترافي بناءً على النص التالي:\n\n{user_input}",
+
+        "content":
+        f"اعطني أفكار محتوى بناءً على الموضوع التالي:\n\n{user_input}",
+
+        "explain":
+        f"اشرح الموضوع التالي بطريقة مبسطة:\n\n{user_input}"
     }
 
-    system_prompt = prompts.get(mode, "أنت مساعد علاقات عامة محترف باللغة العربية.")
+    prompt = prompts.get(mode, user_input)
 
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+
+        model="gpt-4.1-mini",
+
         messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_input}
-        ],
-        temperature=0.7
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
     )
 
     return response.choices[0].message.content
@@ -37,18 +53,25 @@ def generate_response(user_input, mode):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+
     result = ""
 
     if request.method == "POST":
+
         user_input = request.form.get("user_input")
         mode = request.form.get("mode")
 
         if user_input:
-            result = generate_response(user_input, mode)
-        else:
-            result = "الرجاء كتابة الطلب أولًا."
 
-    return render_template("index.html", result=result)
+            result = generate_response(
+                user_input,
+                mode
+            )
+
+    return render_template(
+        "index.html",
+        result=result
+    )
 
 
 if __name__ == "__main__":
